@@ -1,0 +1,76 @@
+{
+    "welcomeMessages": [
+        "Welcome to the Text Adventure Game!",
+        "Type your commands below and press enter or click submit to interact."
+    ],
+    "responses": [
+        "Very interesting!",
+        "I didn't know that.",
+        "Thank you.",
+        "That sounds cool!",
+        "Really?",
+        "Tell me more.",
+        "How fascinating!",
+        "Could you explain further?",
+        "That's a great point.",
+        "I see what you mean."
+    ],
+    "rooms": {
+        "startRoom": {
+            "name": "The Dark Beginning",
+            "description": "You are in a small, dimly lit room. There is a door to the north and a narrow passage to the east, and a spiral staircase that goes up to a loft space.",
+            "exits": {
+                "n": "seaView",
+                "e": "mysticCave",
+                "u": "loftLibrary"
+            },
+            "outside": false
+        },
+        "mysticCave": {
+            "name": "Mystic Cave",
+            "description": "This cave is filled with glowing crystals. A soft, eerie light fills the space. There is a tunnel that leads deeper into darkness to the east.",
+            "exits": {
+                "e": "ancientSanctum",
+                "w": "startRoom"
+            },
+            "outside": false
+        },
+        "ancientSanctum": {
+            "name": "Ancient Sanctum",
+            "description": "You've discovered an ancient sanctum. Relics and tomes of forgotten lore are scattered about. A faint light comes from a passage leading west.",
+            "exits": {
+                "w": "mysticCave"
+            },
+            "outside": false
+        },
+        "loftLibrary": {
+            "name": "Loft Library",
+            "description": "A bright, cozy room filled with books. The walls are lined with shelves, and there's a comfortable looking chair by a small window to the sea. A spiral staircase leads back down.",
+            "exits": {
+                "d": "startRoom"
+            },
+            "outside": false
+        },
+        "seaView": {
+            "name": "Sea View",
+            "description": "You are on a cliff overlooking the sea. The view is breathtaking, with a path leading north along the cliff edge.",
+            "exits": {
+                "n": "cliffWalk",
+                "s": "startRoom"
+            },
+            "outside": true
+        },
+        "cliffWalk": {
+            "name": "Cliff Walk",
+            "description": "The path along the cliff offers a stunning view of the ocean. A gentle breeze carries the scent of the sea.",
+            "exits": {
+                "s": "seaView"
+            },
+            "outside": true,
+            "exitErrors": {
+                "n": "The cliff edge is too steep and dangerous to climb further north.",
+                "d": "It is a perilous plummet down from the path to the rocks below."
+            }
+        }
+    }
+}

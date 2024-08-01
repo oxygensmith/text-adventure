@@ -1,0 +1,82 @@
+/* Apply a universal base style */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0 10px;  /* padding set as requested */
+    font-family: 'Inconsolata', monospace;  /* This ensures all text, including in input and buttons, uses the specified font */
+}
+
+#message-container {
+    position: absolute;
+    top: 50px;
+    left: 10px;
+    right: 10px;
+    width: calc(100% - 20px);  /* Adjust width to account for padding */
+    height: calc(100% - 100px);
+    overflow: auto;
+}
+
+#input-form {
+    position: fixed;
+    bottom: 0;
+    left: 0;  /* Align the form with the left edge of the viewport */
+    right: 0;  /* Stretch the form to the right edge */
+    display: flex;
+}
+
+#user-input, button {
+    font-family: 'Inconsolata', monospace;  /* Explicitly set the font for input and button */
+}
+
+#user-input {
+    flex-grow: 1;
+    padding: 10px;
+    font-size: 16px;
+    border: none;  /* Optional: remove borders for a cleaner look */
+    outline: none;  /* Optional: remove focus outline */
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;  /* Optional: make the button borderless */
+    cursor: pointer;  /* Change cursor to pointer to indicate it's clickable */
+}
+
+/* Styling for user input and parser output */
+.user-input {
+    color: grey;
+}
+
+.parser-output {
+    color: black;
+}
+
+.room-name {
+    font-weight: bold;
+    /* color: navy; */
+}
+
+.room-description {
+    display: inherit;
+    /* color: darkgreen; */
+}
+
+#score-moves-display {
+    width: 100%; 
+    padding: 10px; 
+    background-color: #f8f8f8; 
+    position: fixed; 
+    top: 0; 
+    left: 0; 
+    border-bottom: 1px solid #ccc;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 20px;
+}    
+#score-display,
+#moves-display {
+    display: inline-block;   
+}
