@@ -62,15 +62,71 @@
         },
         "cliffWalk": {
             "name": "Cliff Walk",
-            "description": "The path along the cliff offers a stunning view of the ocean. A gentle breeze carries the scent of the sea.",
+            "description": "The path along the cliff offers a stunning view of the ocean. A long set of stone steps carved near the cliff wall leads down.",
             "exits": {
+                "d": "stoneStepsTop",
                 "s": "seaView"
             },
             "outside": true,
             "exitErrors": {
-                "n": "The cliff edge is too steep and dangerous to climb further north.",
-                "d": "It is a perilous plummet down from the path to the rocks below."
+                "n": "The cliff edge is too steep and dangerous to climb further north."
             }
+        },
+        "stoneStepsTop": {
+            "name": "Cliff Steps Landing",
+            "description": "You are halfway down the cliff, on an ornate stone landing. The air here hangs heavy with the scent of the sea. Around you, the cliff face is adorned with intricate carvings of old, depicting tales of myth and oceanic lore. The descending steps beckon you downward, spiraling into a shaded embrace below, where echoes of the ocean’s roar grow louder with each step. You may also escape upward to a cliff walkway.",
+            "exits": {
+                "u": "cliffWalk",
+                "d": "stoneStepsBase"
+            },
+            "outside": true
+        },
+        "stoneStepsBase": {
+            "name": "Base of the Stone Steps",
+            "description": "Arriving at the base of the stone staircase, you find yourself in a secluded nook of the world. The steps conclude at a rugged landing, framed by looming cliffs that stretch skyward, their faces scarred by the elements yet standing staunch against time. Ahead, through a natural archway formed by two embracing swaths of rock, lie sandy shores and the quiet rumble of ocean waves.",
+            "exits": {
+                "n": "beach",
+                "u": "stoneStepsTop"
+            },
+            "outside": true
+        },
+        "beach": {
+            "name": "Sandy Beach",
+            "description": "The beach extends before you, with the vast ocean lapping at your feet. The horizon is a vast canvas, painted with the hues of the deep blue and the fleeting gold of the sun’s tender rays. To your west, an enigmatic structure catches the eye—a pergola, grand and weathered, its presence a silent testament to bygone eras of grandeur and mystery.",
+            "exits": {
+                "s": "stoneStepsBase",
+                "w": "pergolaEntrance",
+                "e": "impassableRocks"
+            },
+            "outside": true
+        },
+        "impassableRocks": {
+            "name": "Impassable Rocks",
+            "description": "The beach thins out into a jumble of impassable rocks. Eastward, the beach narrows sharply, giving way to a chaotic assembly of jagged rocks. These sentinels of stone bar the way, making further eastward movement impossible",
+            "exits": {
+                "w": "beach"
+            },
+            "outside": true
+        },
+        "pergolaEntrance": {
+            "name": "Pergola Entrance",
+            "description": "You stand before the entrance to a massive pergola.its massive gates swung open as if inviting in wanderers and the winds alike. Vines, both lush and withering, crawl up its stony pillars, grappling with the ravages of time. The architecture—a blend of forgotten artistry and the eternal will of nature—stands proud yet vulnerable, offering shelter and whispers of secrets long held within its shadowed halls.",
+            "exits": {
+                "e": "beach",
+                "w": "pergolaInterior"
+            },
+            "outside": true
+        },
+        "pergolaInterior": {
+            "name": "Pergola Interior",
+            "description": "Stepping inside the pergola, you are enveloped in a realm that defies time. The interior is dominated by a massive, opulent bed, its linens mixed with large goblets, giving you the impression of a marriage bed of the gods. A lonely bookshelf stands watch, filled with tomes with spines weathered by salt, sand and wind.",
+            "exits": {
+                "e": "pergolaEntrance"
+            },
+            "items": [
+                "bookshelf", "massive bed", "wine goblets"
+            ],
+            "outside": true
         }
     }
 }
