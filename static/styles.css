@@ -80,25 +80,27 @@ body.dark .parser-output {
     display: inherit;
 }
 
-#score-moves-display {
+#console {
     width: 100%; 
-    padding: 10px; 
     position: fixed; 
     top: 0; 
     left: 0; 
     border-bottom: 1px solid #ccc;
+    background-color: #f8f8f8;
+}
+.console-padding {
+    padding: 10px;
     display: flex;
     flex-flow: row nowrap;
     justify-content: flex-start;
     align-items: center;
     gap: 20px;
-    background-color: #f8f8f8;
 }
-body.dark #score-moves-display {
+body.dark #console {
     background-color: #555;
     border-bottom: 1px solid #888;
 }
-#score-display,
-#moves-display {
-    display: inline-block;   
+
+#period-of-day {
+    margin-left: auto;
 }

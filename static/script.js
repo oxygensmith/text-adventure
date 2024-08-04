@@ -13,6 +13,7 @@ class Game {
             visited: ['startRoom'],
             score: 0,
             moves: 0,
+            time: 8,
             mode: localStorage.getItem('gameMode') || 'light',
             awaitingRestartConfirmation: false
         };
@@ -23,6 +24,7 @@ class Game {
         this.scoreDisplay = document.getElementById('score');
         this.movesDisplay = document.getElementById('moves');
         this.updateScoreAndMovesDisplay();  // Initial display update
+        this.updateTimeDisplay();
     }
 
     setupCommands() {
@@ -40,6 +42,7 @@ class Game {
             'd': new DownCommand(this),
             'down': new DownCommand(this),
             'look': new LookCommand(this),
+            'time': new TimeCommand(this),
             'wait': new WaitCommand(this),
             'score': new ScoreCommand(this),
             'brief': new BriefCommand(this),
@@ -101,10 +104,10 @@ class Game {
         messageContainer.appendChild(userInputP);
     }
 
-    addParserResponse(message) {
+    addParserResponse(message, style = "normal") {
         const messageContainer = document.getElementById('message-container');
         const parserOutputP = document.createElement('p');
-        parserOutputP.className = 'parser-output';
+        parserOutputP.className = `$('parser-output')`;
         parserOutputP.textContent = message;
         messageContainer.appendChild(parserOutputP);
         // Ensure new messages are scrolled into view
@@ -133,7 +136,9 @@ class Game {
         // for successful actions that increment the
         // move count in the game.
         this.state.moves++;
+        this.advanceTime(1);
         console.log("visited:", this.state.visited);
+        console.log(this.state.time);
         // TO DO: 
         // this.game.handleEventDurations();
         this.updateScoreAndMovesDisplay();
@@ -144,6 +149,56 @@ class Game {
     updateScoreAndMovesDisplay() {
         this.scoreDisplay.textContent = this.state.score;
         this.movesDisplay.textContent = this.state.moves;
+    }
+
+    updateTimeDisplay() {
+        const hour = this.state.time;
+        let periodMessage = "";
+
+        if (hour === 8) {
+            this.state.periodOfDay = "Sunrise";
+            periodMessage = "A soft glow pierces the horizon.";
+        } else if (hour === 9) {
+            this.state.periodOfDay = "Morning";
+            periodMessage = "The day brightens as the sun climbs.";
+        } else if (hour === 12) {
+            this.state.periodOfDay = "Noon";
+            periodMessage = "The sun reigns overhead, relentless.";
+        } else if (hour === 15) {
+            this.state.periodOfDay = "Late Afternoon";
+            periodMessage = "The shadows of objects begin to lengthen.";
+        } else if (hour === 18) {
+            this.state.periodOfDay = "Dusk";
+            periodMessage = "The horizon burns with the dying light.";
+        } else if (hour === 20) {
+            this.state.periodOfDay = "Evening";
+            periodMessage = "Twilight descends, enveloping the world in soft darkness.";
+        } else if (hour === 22) {
+            this.state.periodOfDay = "Night";
+            periodMessage = "The cloak of night covers all in stillness.";
+        } else if (hour === 4) {
+            this.state.periodOfDay = "Before Sunrise";
+            periodMessage = "The deepest dark before the dawn.";
+        }
+
+        if (periodMessage) {
+            this.addParserResponse(periodMessage);
+        }
+        // this.addParserResponse(`The current time is ${this.state.time}:00.`);
+        this.updatePeriodOfDayDisplay();
+    }
+
+    updatePeriodOfDayDisplay() {
+        const periodDisplay = document.getElementById('period-of-day');
+        periodDisplay.textContent = `${this.state.periodOfDay}`;
+    }
+
+    advanceTime(hours) {
+        this.state.time += hours;
+        if (this.state.time >= 24) {
+            this.state.time -= 24; // Handle time wrap-around
+        }
+        this.updateTimeDisplay(); // Recalculate period of day and update UI
     }
 }
 
@@ -231,6 +286,12 @@ class LookCommand extends Command {
     execute() {
         this.game.displayRoom(true); // forceVerbose = true
         this.game.updateMoveCount();
+    }
+}
+
+class TimeCommand extends Command {
+    execute() {
+        this.game.addParserResponse(`The current time is ${this.state.time}:00.`);
     }
 }
 
