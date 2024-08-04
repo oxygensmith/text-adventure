@@ -3,6 +3,60 @@
         "Welcome to the Text Adventure Game!",
         "Type your commands below and press enter or click submit to interact."
     ],
+    "timePeriods": [
+        {
+            "hour": 8,
+            "name": "Sunrise",
+            "message": "A soft glow pierces the horizon."
+        },
+        {
+            "hour": 9,
+            "name": "Morning",
+            "message": "The day brightens as the sun climbs."
+        },
+        {
+            "hour": 12,
+            "name": "Noon",
+            "message": "The sun reigns overhead, relentless."
+        },
+        {
+            "hour": 15,
+            "name": "Late Afternoon",
+            "message": "The shadows of objects begin to lengthen."
+        },
+        {
+            "hour": 18,
+            "name": "Dusk",
+            "message": "The horizon burns with the dying light."
+        },
+        {
+            "hour": 20,
+            "name": "Evening",
+            "message": "Twilight descends, enveloping the world in soft darkness."
+        },
+        {
+            "hour": 22,
+            "name": "Night",
+            "message": "The cloak of night covers all in stillness."
+        },
+        {
+            "hour": 4,
+            "name": "Before Sunrise",
+            "message": "A before-sunrise blue tints the night sky."
+        }
+    ],
+    "awakenessMessages": {
+        "9": "You feel the first twinge of tiredness after the day's adventures.",
+        "6": "You feel sleepier.",
+        "3": "You are definitely tired and feeling the pull of sleepiness.",
+        "1": "I hope there is a place for you to lay down your head and sleep.",
+        "0": "You can't go on, and you lay your head on the ground and close your eyes."
+    },
+    "wakeUpMessages": [
+        "After uneasy dreams, you awake again.",
+        "The sun's light greets you as your eyes flutter open.",
+        "You rise, feeling somewhat refreshed."
+    ],
     "responses": [
         "Very interesting!",
         "I didn't know that.",
@@ -58,37 +112,56 @@
                 "n": "cliffWalk",
                 "s": "startRoom"
             },
-            "outside": true
+            "outside": true,
+            "exitErrors": {
+                "d": "You would surely not survive the fall from the cliff.",
+                "u": "There is nowhere to climb further upward."
+            }
         },
         "cliffWalk": {
             "name": "Cliff Walk",
             "description": "The path along the cliff offers a stunning view of the ocean. A long set of stone steps carved near the cliff wall leads down.",
             "exits": {
-                "d": "stoneStepsTop",
+                "d": "cliffStepsLanding",
                 "s": "seaView"
             },
             "outside": true,
             "exitErrors": {
-                "n": "The cliff edge is too steep and dangerous to climb further north."
+                "n": "The cliff path becomes too steep and narrow to climb further north.",
+                "u": "Only the path allows a possible route further up, but it's too steep and narrow.",
+                "w": "You are blocked by the cliff itself.",
+                "e": "Eastward movement would take you right off the cliff. Fortunately, it seems like there are stone steps here that would carry you down."
             }
         },
-        "stoneStepsTop": {
+        "cliffStepsLanding": {
             "name": "Cliff Steps Landing",
             "description": "You are halfway down the cliff, on an ornate stone landing. The air here hangs heavy with the scent of the sea. Around you, the cliff face is adorned with intricate carvings of old, depicting tales of myth and oceanic lore. The descending steps beckon you downward, spiraling into a shaded embrace below, where echoes of the ocean’s roar grow louder with each step. You may also escape upward to a cliff walkway.",
             "exits": {
                 "u": "cliffWalk",
                 "d": "stoneStepsBase"
             },
-            "outside": true
+            "outside": true,
+            "exitErrors": {
+                "n": "The stairs only go up or down.",
+                "e": "The stairs only go up or down.",
+                "w": "The stairs only go up or down.",
+                "s": "The stairs only go up or down."
+            }
         },
         "stoneStepsBase": {
             "name": "Base of the Stone Steps",
-            "description": "Arriving at the base of the stone staircase, you find yourself in a secluded nook of the world. The steps conclude at a rugged landing, framed by looming cliffs that stretch skyward, their faces scarred by the elements yet standing staunch against time. Ahead, through a natural archway formed by two embracing swaths of rock, lie sandy shores and the quiet rumble of ocean waves.",
+            "description": "You are standing before the base of impressive stone steps that are carved right from the cliff wall, in a secluded nook of the world. The steps conclude at a rugged landing, and the looming cliffs that stretch skyward, their faces scarred by the elements yet standing staunch against time. To the north, through a natural archway formed by two embracing swaths of rock, lie sandy shores and the rumble of ocean waves.",
             "exits": {
                 "n": "beach",
-                "u": "stoneStepsTop"
+                "u": "cliffStepsLanding"
             },
-            "outside": true
+            "outside": true,
+            "exitErrors": {
+                "n": "The stairs only go up or down.",
+                "e": "The stairs only go up or down.",
+                "w": "The stairs only go up or down.",
+                "s": "The stairs only go up or down."
+            }
         },
         "beach": {
             "name": "Sandy Beach",
@@ -98,24 +171,37 @@
                 "w": "pergolaEntrance",
                 "e": "impassableRocks"
             },
-            "outside": true
+            "outside": true,
+            "exitErrors": {
+                "n": "There's only a vast expanse of sea to the north."
+            }
         },
         "impassableRocks": {
             "name": "Impassable Rocks",
-            "description": "The beach thins out into a jumble of impassable rocks. Eastward, the beach narrows sharply, giving way to a chaotic assembly of jagged rocks. These sentinels of stone bar the way, making further eastward movement impossible",
+            "description": "The beach thins out into a jumble of impassable rocks. Eastward, the beach narrows sharply, giving way to a chaotic assembly of jagged rocks. These sentinels of stone bar the way, making further eastward movement impossible.",
             "exits": {
                 "w": "beach"
             },
-            "outside": true
+            "outside": true,
+            "exitErrors": {
+                "e": "The jagged rocks block your movement eastward.",
+                "s": "You attempt to climb up some steep rocks that cover a dune, but you are forced back by the steepness.",
+                "n": "The ocean blocks you from doing anything other than a brief wade."
+            }
+            
         },
         "pergolaEntrance": {
             "name": "Pergola Entrance",
-            "description": "You stand before the entrance to a massive pergola.its massive gates swung open as if inviting in wanderers and the winds alike. Vines, both lush and withering, crawl up its stony pillars, grappling with the ravages of time. The architecture—a blend of forgotten artistry and the eternal will of nature—stands proud yet vulnerable, offering shelter and whispers of secrets long held within its shadowed halls.",
+            "description": "You stand before the entrance to a massive pergola. Its massive gates are swung open, as if inviting in wanderers and the winds alike. Vines, both lush and withering, crawl up its stony pillars, grappling with the ravages of time. The architecture—a blend of forgotten artistry and the eternal will of nature—stands proud yet vulnerable, offering shelter and whispers of secrets long held within its shadowed halls.",
             "exits": {
                 "e": "beach",
                 "w": "pergolaInterior"
             },
-            "outside": true
+            "outside": true,
+            "exitErrors": {
+                "n": "The ocean laps at your feet in that direction.",
+                "s": "The pergola becomes one with a wall of jagged rock in that direction."
+            }
         },
         "pergolaInterior": {
             "name": "Pergola Interior",
@@ -124,7 +210,7 @@
                 "e": "pergolaEntrance"
             },
             "items": [
-                "bookshelf", "massive bed", "wine goblets"
+                "bookshelf", "massive bed", "wine goblet"
             ],
             "outside": true
         }

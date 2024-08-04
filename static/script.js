@@ -1,9 +1,13 @@
 class Game {
     constructor(data) {
         this.data = data;
+        this.awakenessMessages = data.awakenessMessages;
+        this.wakeUpMessages = data.wakeUpMessages;
+        this.timePeriods = data.timePeriods;
         this.initializeGameState();
         this.setupCommands(); // init commands map
         this.setupDisplay(); // init display components (score, moves etc)
+        // inputHandling is set up in start() now to ensure components have loaded
     }
 
     initializeGameState() {
@@ -14,6 +18,9 @@ class Game {
             score: 0,
             moves: 0,
             time: 8,
+            currentPeriod: null,
+            health: 100,
+            awakeness: 10,
             mode: localStorage.getItem('gameMode') || 'light',
             awaitingRestartConfirmation: false
         };
@@ -44,6 +51,7 @@ class Game {
             'look': new LookCommand(this),
             'time': new TimeCommand(this),
             'wait': new WaitCommand(this),
+            'sleep': new SleepCommand(this),
             'score': new ScoreCommand(this),
             'brief': new BriefCommand(this),
             'verbose': new VerboseCommand(this),
@@ -136,9 +144,13 @@ class Game {
         // for successful actions that increment the
         // move count in the game.
         this.state.moves++;
-        this.advanceTime(1);
-        console.log("visited:", this.state.visited);
-        console.log(this.state.time);
+        if (this.state.time >= 21) {
+            this.updateAwakeness();
+        }
+        this.advanceTime(0.5);
+        // console.log("visited:", this.state.visited);
+        console.log(`Time: ${this.state.time}`);
+        console.log(`Awakeness: ${this.state.awakeness}`);
         // TO DO: 
         // this.game.handleEventDurations();
         this.updateScoreAndMovesDisplay();
@@ -152,45 +164,38 @@ class Game {
     }
 
     updateTimeDisplay() {
-        const hour = this.state.time;
-        let periodMessage = "";
+        const hour = Math.floor(this.state.time);
+        const minutes = (this.state.time % 1) * 60;
+        const newPeriod = this.findClosestPeriod(hour);
 
-        if (hour === 8) {
-            this.state.periodOfDay = "Sunrise";
-            periodMessage = "A soft glow pierces the horizon.";
-        } else if (hour === 9) {
-            this.state.periodOfDay = "Morning";
-            periodMessage = "The day brightens as the sun climbs.";
-        } else if (hour === 12) {
-            this.state.periodOfDay = "Noon";
-            periodMessage = "The sun reigns overhead, relentless.";
-        } else if (hour === 15) {
-            this.state.periodOfDay = "Late Afternoon";
-            periodMessage = "The shadows of objects begin to lengthen.";
-        } else if (hour === 18) {
-            this.state.periodOfDay = "Dusk";
-            periodMessage = "The horizon burns with the dying light.";
-        } else if (hour === 20) {
-            this.state.periodOfDay = "Evening";
-            periodMessage = "Twilight descends, enveloping the world in soft darkness.";
-        } else if (hour === 22) {
-            this.state.periodOfDay = "Night";
-            periodMessage = "The cloak of night covers all in stillness.";
-        } else if (hour === 4) {
-            this.state.periodOfDay = "Before Sunrise";
-            periodMessage = "The deepest dark before the dawn.";
+        if (newPeriod && newPeriod.name !== this.state.currentPeriod) {
+            console.log(`Period changed from ${this.state.currentPeriod} to ${newPeriod.name}`);
+            this.state.currentPeriod = newPeriod.name; // Update the period of day
+            this.addParserResponse(newPeriod.message); // Display period transition message
         }
 
-        if (periodMessage) {
-            this.addParserResponse(periodMessage);
-        }
-        // this.addParserResponse(`The current time is ${this.state.time}:00.`);
+        // this.addParserResponse(`The current time is ${hour}:${minutes < 10 ? '0' : ''}${minutes}.`); // don't add regular time updates to parser output
         this.updatePeriodOfDayDisplay();
     }
 
+    findClosestPeriod(currentHour) {
+        // Start from currentHour and go backward to find the closest period
+        let lastPeriod = null;
+        for (let period of this.timePeriods) {
+            if (period.hour > currentHour) break;
+            lastPeriod = period;
+        }
+        return lastPeriod;
+    }
+    
     updatePeriodOfDayDisplay() {
         const periodDisplay = document.getElementById('period-of-day');
-        periodDisplay.textContent = `${this.state.periodOfDay}`;
+        periodDisplay.textContent = `${this.state.currentPeriod}`;
+    }
+
+    updateHealthDisplay() {
+        const healthDisplay = document.getElementById('health');
+        healthDisplay.textContent = `Health: ${this.state.health}`;
     }
 
     advanceTime(hours) {
@@ -198,7 +203,35 @@ class Game {
         if (this.state.time >= 24) {
             this.state.time -= 24; // Handle time wrap-around
         }
+        if (this.state.time >= 21) { // After 9 PM
+            this.updateAwakeness();
+        }
         this.updateTimeDisplay(); // Recalculate period of day and update UI
+    }
+
+    updateAwakeness() {
+        console.log("updateAwakeness called", new Error().stack);
+        this.state.awakeness--;
+        let message = this.awakenessMessages[this.state.awakeness.toString()];
+        if (message) {
+            this.addParserResponse(message);
+        }
+        if (this.state.awakeness <= 0) {
+            this.resetAwakeness();
+        }
+    }
+
+    resetAwakeness() {
+        console.log("Resetting awakeness...");
+        this.state.awakeness = 10;
+        this.advanceTime(7.5);
+        console.log(`New time after sleep: ${this.state.time}`);
+        this.updateTimeDisplay();
+        this.updatePeriodOfDayDisplay();
+        let randomIndex = Math.floor(Math.random() * this.wakeUpMessages.length);
+        let wakeMessage = this.wakeUpMessages[randomIndex];
+        this.addParserResponse(wakeMessage);
+        this.displayRoom(true); // Force a full room description
     }
 }
 
@@ -291,7 +324,10 @@ class LookCommand extends Command {
 
 class TimeCommand extends Command {
     execute() {
-        this.game.addParserResponse(`The current time is ${this.state.time}:00.`);
+        const hour = Math.floor(this.game.state.time);
+        const minutes = (this.game.state.time % 1) * 60;
+        this.game.addParserResponse(`The current time is ${hour}:${minutes < 10 ? '0' : ''}${minutes}.`);
+        this.game.addParserResponse(`It is currently ${this.game.state.currentPeriod}.`);
     }
 }
 
@@ -299,6 +335,17 @@ class WaitCommand extends Command {
     execute() {
         this.game.addParserResponse("Time passes.");
         this.game.updateMoveCount();
+    }
+}
+
+class SleepCommand extends Command {
+    execute() {
+        if (this.game.state.awakeness === 10) {
+            this.game.addParserResponse("You are nowhere near tired.");
+        } else {
+            this.game.addParserResponse("You lay down, resting your head on the softest thing nearby, and after a short while, you drift off.");
+            this.game.resetAwakeness();  // Call the resetAwakeness method to handle the sleep logic
+        }
     }
 }
 
