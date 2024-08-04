@@ -1,6 +1,7 @@
 class Game {
     constructor(data) {
         this.data = data;
+        this.objects = data.objects;
         this.awakenessMessages = data.awakenessMessages;
         this.wakeUpMessages = data.wakeUpMessages;
         this.timePeriods = data.timePeriods;
@@ -15,6 +16,9 @@ class Game {
             currentRoom: null,
             descriptions: 'brief', // only describes rooms fully on 1st visit
             visited: ['startRoom'],
+            inventoryWeight: 0,
+            inventoryMaxWeight: 10,
+            inventoryObjects: [],
             score: 0,
             moves: 0,
             time: 8,
@@ -100,7 +104,12 @@ class Game {
             if (!this.state.visited.includes(room.name)) {
                 this.state.visited.push(room.name);
             }
-        }    
+        }
+        
+        // Display objects in the room
+        this.objects.filter(obj => obj.location === room.name).forEach(obj => {
+            this.addParserResponse(obj.descriptionInitial);
+        });
     }
 
     addPlayerResponse(message) {
@@ -232,6 +241,28 @@ class Game {
         let wakeMessage = this.wakeUpMessages[randomIndex];
         this.addParserResponse(wakeMessage);
         this.displayRoom(true); // Force a full room description
+    }
+
+    // inventory
+
+    addItemToInventory(item) {
+        if (this.state.inventoryWeight + item.inventorySpace <= this.state.inventoryMaxWeight) {
+            this.state.inventoryObjects.push(item);
+            this.state.inventoryWeight += item.inventorySpace;
+            this.addParserResponse(`You have taken ${item.article} ${item.name}.`);
+        } else {
+            this.addParserResponse("You can't carry any more.");
+        }
+    }
+
+    removeItemFromInventory(itemName) {
+        let itemIndex = this.state.inventoryObjects.findIndex(item => item.name === itemName);
+        if (itemIndex !== -1) {
+            let item = this.state.inventoryObjects[itemIndex];
+            this.state.inventoryObjects.splice(itemIndex, 1);
+            this.state.inventoryWeight -= item.inventorySpace;
+            this.addParserResponse(`You have dropped ${item.article} ${item.name}.`);
+        }
     }
 }
 

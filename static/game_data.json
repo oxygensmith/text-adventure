@@ -114,8 +114,10 @@
             },
             "outside": true,
             "exitErrors": {
-                "d": "You would surely not survive the fall from the cliff.",
-                "u": "There is nowhere to climb further upward."
+                "e": "That way leads to a sheer plummet to the waves and rocks below.",
+                "d": "You would surely not survive the fall.",
+                "u": "There is nowhere to climb further upward.",
+                "w": "The cliff face blocks your movement west."
             }
         },
         "cliffWalk": {
@@ -135,7 +137,7 @@
         },
         "cliffStepsLanding": {
             "name": "Cliff Steps Landing",
-            "description": "You are halfway down the cliff, on an ornate stone landing. The air here hangs heavy with the scent of the sea. Around you, the cliff face is adorned with intricate carvings of old, depicting tales of myth and oceanic lore. The descending steps beckon you downward, spiraling into a shaded embrace below, where echoes of the ocean’s roar grow louder with each step. You may also escape upward to a cliff walkway.",
+            "description": "You are halfway down the cliff, on an ornate stone landing. The air here hangs heavy with the scent of the sea. Around you, the cliff face is adorned with intricate carvings, depicting tales of myth and oceanic lore. The descending steps beckon you downward, spiraling into a shaded embrace below, where echoes of the ocean’s roar grow louder with each step. You may also escape upward to a cliff walkway.",
             "exits": {
                 "u": "cliffWalk",
                 "d": "stoneStepsBase"
@@ -157,10 +159,9 @@
             },
             "outside": true,
             "exitErrors": {
-                "n": "The stairs only go up or down.",
-                "e": "The stairs only go up or down.",
-                "w": "The stairs only go up or down.",
-                "s": "The stairs only go up or down."
+                "e": "That only leads to the other side of this alcove, where you are blocked by tall jagged rocks.",
+                "w": "That would make you collide with the cliff wall. Perhaps the upward stairs are more promising.",
+                "s": "The southern direction here tapers into a wall of rocks. The open beach beckons to the north."
             }
         },
         "beach": {
@@ -214,5 +215,54 @@
             ],
             "outside": true
         }
+
+    },
+    "objects": [
+    {
+      "name": "ancient coin",
+      "article": "an",
+      "location": "Mystic Cave",
+      "descriptionInitial": "An ancient coin lies half-buried in the dusty floor of the cave.",
+      "description": "The ancient coin, though tarnished, gleams faintly in the light.",
+      "descriptionInventory": "The small coin feels heavy and cold in your pocket.",
+      "descriptionWeild": "",
+      "inventorySpace": 1,
+      "carryable": true,
+      "openable": false,
+      "closable": false,
+      "weildable": false,
+      "translucent": false,
+      "internalSpace": 0,
+      "customErrors": {
+        "open": "It's a coin, not a clamshell!",
+        "close": "",
+        "putInside": "",
+        "take": ""
+      },
+      "scoreIncrease": 5
+    },
+    {
+      "name": "rusty key",
+      "article": "a",
+      "location": "Loft Library",
+      "descriptionInitial": "A rusty key hangs from an old hook on the wall.",
+      "description": "The key is ornate, suggesting it unlocks something valuable.",
+      "descriptionInventory": "The rusty key jingles softly with every step you take.",
+      "descriptionWeild": "",
+      "inventorySpace": 1,
+      "carryable": true,
+      "openable": false,
+      "closable": false,
+      "weildable": false,
+      "translucent": false,
+      "internalSpace": 0,
+      "customErrors": {
+        "open": "",
+        "close": "",
+        "putInside": "",
+        "take": ""
+      },
+      "scoreIncrease": 0
     }
+]
 }
