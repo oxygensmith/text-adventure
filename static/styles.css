@@ -6,6 +6,16 @@ html, body {
     font-family: 'Inconsolata', monospace;  /* This ensures all text, including in input and buttons, uses the specified font */
 }
 
+body.light {
+    background-color: white;
+    color: black;
+}
+
+body.dark {
+    background-color: black;
+    color: white;
+}
+
 #message-container {
     position: absolute;
     top: 50px;
@@ -35,12 +45,20 @@ html, body {
     border: none;  /* Optional: remove borders for a cleaner look */
     outline: none;  /* Optional: remove focus outline */
 }
+body.dark #user-input {
+    background-color: darkslategray;
+    color: white;
+}
 
 button {
     padding: 10px 20px;
     font-size: 16px;
     border: none;  /* Optional: make the button borderless */
     cursor: pointer;  /* Change cursor to pointer to indicate it's clickable */
+}
+body.dark button {
+    background-color: darkslategray;
+    color: white;
 }
 
 /* Styling for user input and parser output */
@@ -51,21 +69,20 @@ button {
 .parser-output {
     color: black;
 }
+body.dark .parser-output {
+    color: white;
+}
 
 .room-name {
     font-weight: bold;
-    /* color: navy; */
 }
-
 .room-description {
     display: inherit;
-    /* color: darkgreen; */
 }
 
 #score-moves-display {
     width: 100%; 
     padding: 10px; 
-    background-color: #f8f8f8; 
     position: fixed; 
     top: 0; 
     left: 0; 
@@ -75,7 +92,12 @@ button {
     justify-content: flex-start;
     align-items: center;
     gap: 20px;
-}    
+    background-color: #f8f8f8;
+}
+body.dark #score-moves-display {
+    background-color: #555;
+    border-bottom: 1px solid #888;
+}
 #score-display,
 #moves-display {
     display: inline-block;   
