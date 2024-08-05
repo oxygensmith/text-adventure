@@ -166,7 +166,7 @@
         },
         "beach": {
             "name": "Sandy Beach",
-            "description": "The beach extends before you, with the vast ocean lapping at your feet. The horizon is a vast canvas, painted with the hues of the deep blue and the fleeting gold of the sun’s tender rays. To your west, an enigmatic structure catches the eye—a pergola, grand and weathered, its presence a silent testament to bygone eras of grandeur and mystery.",
+            "description": "The beach extends before you, with the vast ocean lapping at your feet. The horizon is a vast canvas, painted with the hues of the deep blue and the fleeting gold of the sun’s tender rays. To your west, an enigmatic structure catches the eye-- a pergola, grand and weathered, its presence a silent testament to bygone eras of grandeur and mystery.",
             "exits": {
                 "s": "stoneStepsBase",
                 "w": "pergolaEntrance",
@@ -193,7 +193,7 @@
         },
         "pergolaEntrance": {
             "name": "Pergola Entrance",
-            "description": "You stand before the entrance to a massive pergola. Its massive gates are swung open, as if inviting in wanderers and the winds alike. Vines, both lush and withering, crawl up its stony pillars, grappling with the ravages of time. The architecture—a blend of forgotten artistry and the eternal will of nature—stands proud yet vulnerable, offering shelter and whispers of secrets long held within its shadowed halls.",
+            "description": "You stand before the entrance to a massive pergola. Its massive gates are swung open, as if inviting in wanderers and the winds alike. Vines, both lush and withering, crawl up its stony pillars, grappling with the ravages of time. The architectur-- a blend of forgotten artistry and the eternal will of nature-- stands proud yet vulnerable, offering shelter and whispers of secrets long held within its shadowed halls.",
             "exits": {
                 "e": "beach",
                 "w": "pergolaInterior"
@@ -210,9 +210,6 @@
             "exits": {
                 "e": "pergolaEntrance"
             },
-            "items": [
-                "bookshelf", "massive bed", "wine goblet"
-            ],
             "outside": true
         }
 
@@ -220,14 +217,17 @@
     "objects": [
     {
       "name": "ancient coin",
+      "shortNames": ["coin"],
       "article": "an",
       "location": "Mystic Cave",
       "descriptionInitial": "An ancient coin lies half-buried in the dusty floor of the cave.",
       "description": "The ancient coin, though tarnished, gleams faintly in the light.",
       "descriptionInventory": "The small coin feels heavy and cold in your pocket.",
       "descriptionWeild": "",
+      "descriptionEmbedded": false,
       "inventorySpace": 1,
       "carryable": true,
+      "moved": false,
       "openable": false,
       "closable": false,
       "weildable": false,
@@ -243,14 +243,17 @@
     },
     {
       "name": "rusty key",
+      "shortNames": ["key"],
       "article": "a",
       "location": "Loft Library",
       "descriptionInitial": "A rusty key hangs from an old hook on the wall.",
       "description": "The key is ornate, suggesting it unlocks something valuable.",
       "descriptionInventory": "The rusty key jingles softly with every step you take.",
       "descriptionWeild": "",
+      "descriptionEmbedded": false,
       "inventorySpace": 1,
       "carryable": true,
+      "moved": false,
       "openable": false,
       "closable": false,
       "weildable": false,
@@ -263,6 +266,108 @@
         "take": ""
       },
       "scoreIncrease": 0
+    },
+    {
+        "name": "bed",
+        "shortNames": ["bed"],
+        "article": "a",
+        "location": "Pergola Interior",
+        "descriptionInitial": "A massive, opulent bed dominates the room.",
+        "description": "The bed is adorned with luxurious linens, fit for royalty.",
+        "descriptionInventory": "",
+        "descriptionWeild": "",
+        "descriptionEmbedded": true,
+        "inventorySpace": 0,
+        "carryable": false,
+        "moved": false,
+        "openable": false,
+        "closable": false,
+        "weildable": false,
+        "translucent": false,
+        "internalSpace": 0,
+        "customErrors": {
+            "open": "The bed is not something you can open.",
+            "close": "The bed doesn't close.",
+            "putInside": "There’s nowhere to put that in the bed.",
+            "take": "The bed is far too heavy to move."
+        },
+        "scoreIncrease": 0
+    },
+    {
+        "name": "bookshelf",
+        "shortNames": ["shelves"],
+        "article": "a",
+        "location": "Pergola Interior",
+        "descriptionInitial": "A lonely bookshelf stands against the wall, filled with weathered tomes.",
+        "description": "The bookshelf is filled with ancient books, some of which are crumbling with age.",
+        "descriptionInventory": "",
+        "descriptionWeild": "",
+        "descriptionEmbedded": true,
+        "inventorySpace": 0,
+        "carryable": false,
+        "moved": false,
+        "openable": false,
+        "closable": false,
+        "weildable": false,
+        "translucent": false,
+        "internalSpace": 0,
+        "customErrors": {
+            "open": "The bookshelf is not something you can open.",
+            "close": "The bookshelf doesn’t close.",
+            "putInside": "You can’t put that inside the bookshelf.",
+            "take": "The bookshelf is far too heavy to move."
+        },
+        "scoreIncrease": 0
+    },
+    {
+        "name": "ornate goblet",
+        "shortNames": ["goblet"],
+        "article": "an",
+        "location": "Pergola Interior",
+        "descriptionInitial": "An ornate goblet lies on the ground, glinting in the dim light.",
+        "description": "The goblet is crafted from a heavy, tarnished metal, with intricate designs etched into its surface.",
+        "descriptionInventory": "The ornate goblet feels substantial in your hand, its weight a testament to its craftsmanship.",
+        "descriptionWeild": "",
+        "descriptionEmbedded": false,
+        "inventorySpace": 2,
+        "carryable": true,
+        "moved": false,
+        "openable": false,
+        "closable": false,
+        "weildable": false,
+        "translucent": false,
+        "internalSpace": 1,
+        "customErrors": {
+            "open": "The goblet is already open.",
+            "close": "The goblet doesn’t close.",
+            "putInside": "You can only put liquid inside the goblet.",
+            "take": ""
+        },
+        "scoreIncrease": 0
+    },
+    {
+        "name": "jar of pesto",
+        "shortNames": ["pesto", "jar"],
+        "article": "a",
+        "location": "Pergola Interior",
+        "descriptionInitial": "A small jar of pesto sits quaintly on the bookshelf, its green contents vivid against the old wood.",
+        "description": "The jar of pesto is sealed tight, promising a fresh taste of basil and pine nuts.",
+        "descriptionInventory": "The jar feels cool and slightly gritty in your hand, the label worn but the seal intact.",
+        "descriptionWeild": "Holding the jar, you feel oddly prepared for a culinary emergency.",
+        "descriptionEmbedded": false,
+        "inventorySpace": 1,
+        "carryable": true,
+        "openable": true,
+        "closeable": true,
+        "weildable": true,
+        "translucent": false,
+        "putInsideable": false,
+        "insideCapacity": 0,
+        "scoreValueWhenTaken": 5,
+        "customErrors": {
+            "open": "The jar's lid resists your efforts to twist it open.",
+            "close": "The lid clicks back into place with a satisfying snap."
+        }
     }
 ]
 }
